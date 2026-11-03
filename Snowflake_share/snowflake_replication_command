@@ -1,0 +1,14 @@
+# --Create a replication 
+
+# first enable the replication 
+# then the refresh time to update the data 
+
+-- Source account
+ALTER DATABASE sales_db ENABLE REPLICATION TO ACCOUNTS myorg.region2_acct;
+
+-- Region 2 account
+CREATE DATABASE sales_db AS REPLICA OF myorg.source_acct.sales_db;
+ALTER DATABASE sales_db REFRESH;
+ALTER DATABASE sales_db SET REPLICATION_SCHEDULE = '60 MINUTE';
+-- then CREATE SHARE from this replica to consumers in region 2
+
